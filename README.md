@@ -30,11 +30,11 @@ Number and name of feature: Implement City Explorer Frontend Static/Placeholder
 
 Estimate of time needed to complete: 60mins
 
-Start time: 08:30
+Start time: 0830
 
-Finish time: _____
+Finish time: 0930
 
-Actual time needed to complete:
+Actual time needed to complete: 60mins
 ```
 
 ## Credits:
