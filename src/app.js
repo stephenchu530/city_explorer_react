@@ -1,7 +1,10 @@
 import React from 'react';
 import superagent from 'superagent';
 
+import If from './if.js'
 import Header from './header.js';
+import BackendURL from './backend.js';
+import Geocode from './geocode.js';
 import SearchForm from './search-form.js';
 import Map from './map.js';
 import SearchResults from './search-results.js';
@@ -16,32 +19,21 @@ class Main extends React.Component {
       query: '',
       location: '',
       backendURL: '',
-      geocodeAPI: ''
+      geocode: ''
     };
   }
 
-  handleURL = e => {
-    e.preventDefault();
-    let backendURL = e.target.childNodes[1].value;
-    e.target.childNodes[1].value = '';
-    if (backendURL[backendURL.length - 1] === '/') {
-      backendURL = backendURL.slice(0, backendURL.length - 1);
-    }
-    this.setState({ backendURL });
+  handleURL = async backendURL => {
+    await this.setState({ backendURL });
   }
 
-  handleGeocode = e => {
-    e.preventDefault();
-    localStorage['geocode'] = e.target.childNodes[1].value;
-    e.target.childNodes[1].value = '';
+  handleGeocode = async geocode => {
+    await this.setState({ geocode });
   }
 
-  handleQuery = e => {
-    e.preventDefault();
-    let query = e.target.childNodes[1].value;
-    e.target.childNodes[1].value = '';
-    this.setState({ query });
-    let URL = `${this.state.backendURL}/location?data=${query}`;
+  handleQuery = async query => {
+    await this.setState({ query });
+    let URL = `${this.state.backendURL}/location?data=${this.state.query}`;
     superagent.get(URL)
       .then(res => {
         this.setState({ location: res.body });
@@ -51,35 +43,21 @@ class Main extends React.Component {
   render() {
     return (
         <main>
-        <Backend handleURL={ this.handleURL } />
-        <Geocode handleGeocode={ this.handleGeocode } />
-        <SearchForm handleQuery={ this.handleQuery } />
-        <Map location={ this.state.location } />
-        <ErrorMessage />
-        <SearchResults location={ this.state.location } />
+        <If condition={ this.state.backendURL === ''}>
+          <BackendURL handleBackendURL={ this.handleURL } />
+        </If>
+        <If condition={localStorage.getItem('geocode') === null}>
+          <Geocode handleGeocode={ this.handleGeocode } />
+        </If>
+        <If condition={ (this.state.backendURL !== '') && (localStorage.getItem('geocode') !== null) }>
+          <SearchForm handleQuery={ this.handleQuery } />
+        </If>
+        <If condition={ this.state.location !== '' }>
+          <Map location={ this.state.location } />
+          <ErrorMessage />
+          <SearchResults location={ this.state.location } />
+        </If>
       </main>
-    )
-  }
-}
-
-class Backend extends React.Component {
-  render() {
-    return (
-      <form onSubmit={ this.props.handleURL }>
-        <label>Enter the URL to your deployed back end, making sure to remove the trailing forward slash</label>
-        <input type="text" />
-      </form>
-    )
-  }
-}
-
-class Geocode extends React.Component {
-  render() {
-    return (
-      <form onSubmit={ this.props.handleGeocode }>
-        <label>Enter your Geocoding API Key:</label>
-        <input type="text" />
-      </form>
     )
   }
 }
