@@ -5,7 +5,7 @@ class Result extends React.Component {
     return (
       <section>
         <h3>Results from the Lorem Ipsum</h3>
-        <ul class="Lorem Ipsum"></ul>
+        <ul></ul>
       </section>
     )
   }

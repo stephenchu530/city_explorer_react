@@ -5,7 +5,7 @@ import Result from './result.js';
 class SearchResults extends React.Component {
   render() {
     return (
-      <div class="column-container hide">
+      <div>
         <Result title="Darksky" />
         <Result title="Yelp" />
         <Result title="EventBrite" />

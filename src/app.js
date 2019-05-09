@@ -1,20 +1,62 @@
 import React from 'react';
+import superagent from 'superagent';
 
 import Header from './header.js';
+import SearchForm from './search-form.js';
 import Map from './map.js';
 import SearchResults from './search-results.js';
 
+localStorage['debug'] = 'fun';
+
 class Main extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      query: '',
+      location: '',
+      backendURL: '',
+      geocodeAPI: ''
+    };
+  }
+
+  handleURL = e => {
+    e.preventDefault();
+    let backendURL = e.target.childNodes[1].value;
+    e.target.childNodes[1].value = '';
+    if (backendURL[backendURL.length - 1] === '/') {
+      backendURL = backendURL.slice(0, backendURL.length - 1);
+    }
+    this.setState({ backendURL });
+  }
+
+  handleGeocode = e => {
+    e.preventDefault();
+    localStorage['geocode'] = e.target.childNodes[1].value;
+    e.target.childNodes[1].value = '';
+  }
+
+  handleQuery = e => {
+    e.preventDefault();
+    let query = e.target.childNodes[1].value;
+    e.target.childNodes[1].value = '';
+    this.setState({ query });
+    let URL = `${this.state.backendURL}/location?data=${query}`;
+    superagent.get(URL)
+      .then(res => {
+        this.setState({ location: res.body });
+      });
+  }
+
   render() {
     return (
-      <main>
-        <Backend />
-        <Geocode />
-        <Search />
-        <Map />
-        <h2 class="query-placeholder"></h2>
+        <main>
+        <Backend handleURL={ this.handleURL } />
+        <Geocode handleGeocode={ this.handleGeocode } />
+        <SearchForm handleQuery={ this.handleQuery } />
+        <Map location={ this.state.location } />
         <ErrorMessage />
-        <SearchResults />
+        <SearchResults location={ this.state.location } />
       </main>
     )
   }
@@ -23,9 +65,9 @@ class Main extends React.Component {
 class Backend extends React.Component {
   render() {
     return (
-      <form id="url-form">
+      <form onSubmit={ this.props.handleURL }>
         <label>Enter the URL to your deployed back end, making sure to remove the trailing forward slash</label>
-        <input type="text" id="back-end-url" />
+        <input type="text" />
       </form>
     )
   }
@@ -34,21 +76,9 @@ class Backend extends React.Component {
 class Geocode extends React.Component {
   render() {
     return (
-      <form id="geocode-form">
+      <form onSubmit={ this.props.handleGeocode }>
         <label>Enter your Geocoding API Key:</label>
-        <input type="text" id="api-key" />
-      </form>
-    )
-  }
-}
-
-class Search extends React.Component {
-  render() {
-    return (
-      <form id="search-form" class="hide">
-        <label for="search">Search for a location</label>
-        <input type="text" name="search" id="input-search" placeholder="Enter a location here" />
-        <button type="submit">Explore!</button>
+        <input type="text" />
       </form>
     )
   }
@@ -57,7 +87,7 @@ class Search extends React.Component {
 class ErrorMessage extends React.Component {
   render() {
     return (
-      <section class="error-container"></section>
+      <section></section>
     )
   }
 }
