@@ -15,7 +15,11 @@ city_explorer_react (repository)
 │  └── index.html
 ├──src
 │  └── app.js
-│  └── index.js
+│  └── header.js
+│  └── search-form.js
+│  └── search-results.js
+│  └── result.js
+│  └── map.js
 ├── .eslintrc.json
 ├── .gitignore
 ├── package-lock.json
@@ -26,7 +30,18 @@ city_explorer_react (repository)
 
 ## Time Estimate for Completion
 ```
-Number and name of feature: Implement City Explorer Frontend Static/Placeholder
+Number and name of feature: 02 - Repackage components, refactor code, pass props and states
+
+Estimate of time needed to complete: 180mins
+
+Start time: 0830
+
+Finish time: ____
+
+Actual time needed to complete: ____
+```
+```
+Number and name of feature: 01 - Implement City Explorer Frontend Static/Placeholder
 
 Estimate of time needed to complete: 60mins
 
