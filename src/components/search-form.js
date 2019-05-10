@@ -1,7 +1,5 @@
 import React from 'react';
 
-localStorage['debug'] = 'fun';
-
 class SearchForm extends React.Component {
   handleInput = e => {
     e.preventDefault();

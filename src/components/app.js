@@ -16,10 +16,10 @@ class Main extends React.Component {
     super(props);
 
     this.state = {
-      query: '',
-      location: '',
-      backendURL: '',
-      geocode: ''
+      query: null,
+      location: null,
+      backendURL: null,
+      geocode: null
     };
   }
 
@@ -33,9 +33,15 @@ class Main extends React.Component {
 
   handleQuery = async query => {
     await this.setState({ query });
-    let URL = `${this.state.backendURL}/location?data=${this.state.query}`;
+    this.makeQuery();
+  }
+
+  makeQuery = () => {
+    let URL = `${this.state.backendURL}/location`;
     superagent.get(URL)
+      .query({ data: this.state.query })
       .then(res => {
+        this.setState({ location: null });
         this.setState({ location: res.body });
       });
   }
@@ -43,19 +49,19 @@ class Main extends React.Component {
   render() {
     return (
         <main>
-        <If condition={ this.state.backendURL === ''}>
+        <If condition={ this.state.backendURL === null }>
           <BackendURL handleBackendURL={ this.handleURL } />
         </If>
-        <If condition={localStorage.getItem('geocode') === null}>
+        <If condition={localStorage.getItem('geocode') === null }>
           <Geocode handleGeocode={ this.handleGeocode } />
         </If>
-        <If condition={ (this.state.backendURL !== '') && (localStorage.getItem('geocode') !== null) }>
+        <If condition={ (this.state.backendURL !== null) && (localStorage.getItem('geocode') !== null) }>
           <SearchForm handleQuery={ this.handleQuery } />
         </If>
-        <If condition={ this.state.location !== '' }>
+        <If condition={ this.state.location !== null }>
           <Map location={ this.state.location } />
           <ErrorMessage />
-          <SearchResults location={ this.state.location } />
+        <SearchResults location={ this.state.location } backend={ this.state.backendURL } />
         </If>
       </main>
     )
