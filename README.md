@@ -30,7 +30,7 @@ city_explorer_react (repository)
 
 ## Time Estimate for Completion
 ```
-Number and name of feature: 02 - Repackage components, refactor code, pass props and states
+Number and name of feature: 03 - Finish the project
 
 Estimate of time needed to complete: 180mins
 
@@ -39,6 +39,17 @@ Start time: 0830
 Finish time: ____
 
 Actual time needed to complete: ____
+```
+```
+Number and name of feature: 02 - Repackage components, refactor code, pass props and states
+
+Estimate of time needed to complete: 180mins
+
+Start time: 0830
+
+Finish time: DNC
+
+Actual time needed to complete: DNC
 ```
 ```
 Number and name of feature: 01 - Implement City Explorer Frontend Static/Placeholder
