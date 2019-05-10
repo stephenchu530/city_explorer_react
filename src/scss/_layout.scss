@@ -1,21 +1,17 @@
-main {
-  border: solid 2px $black;
-  padding: $gutter_std / 2;
-  min-height: 100px;
+main div {
+  display: flex;
+  align-items: stretch;
 }
 
-header {
-  background: $black;
-  font-size: 1.5vw;
-  padding: $gutter_std;
-
-  a {
-    color: $white;
-  }
+section {
+  background: $white;
+  flex-grow: 1;
+  flex-basis: 0;
+  margin: 5px;
 }
 
-footer {
-  background: $black;
-  color: $white;
-  padding: $gutter_std;
+li {
+  border: 1px solid $black;
+  margin: 5px;
+  padding: 5px;
 }
