@@ -1,0 +1,17 @@
+main div {
+  display: flex;
+  align-items: stretch;
+}
+
+section {
+  background: $white;
+  flex-grow: 1;
+  flex-basis: 0;
+  margin: 5px;
+}
+
+li {
+  border: 1px solid $black;
+  margin: 5px;
+  padding: 5px;
+}
