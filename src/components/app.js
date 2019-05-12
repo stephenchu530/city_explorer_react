@@ -54,7 +54,7 @@ class Main extends React.Component {
           <BackendURL handleBackendURL={ this.handleURL } />
         </If>
          */}
-        <If condition={localStorage.getItem('geocode') === null }>
+        <If condition={ localStorage.getItem('geocode') === null }>
           <Geocode handleGeocode={ this.handleGeocode } />
         </If>
         <SearchForm handleQuery={ this.handleQuery } />
