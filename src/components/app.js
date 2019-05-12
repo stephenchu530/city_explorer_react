@@ -18,7 +18,7 @@ class Main extends React.Component {
     this.state = {
       query: null,
       location: null,
-      backendURL: null,
+      backendURL: `https://still-caverns-25372.herokuapp.com`,
       geocode: null
     };
   }
@@ -49,15 +49,15 @@ class Main extends React.Component {
   render() {
     return (
         <main>
+        {/*
         <If condition={ this.state.backendURL === null }>
           <BackendURL handleBackendURL={ this.handleURL } />
         </If>
+         */}
         <If condition={localStorage.getItem('geocode') === null }>
           <Geocode handleGeocode={ this.handleGeocode } />
         </If>
-        <If condition={ (this.state.backendURL !== null) && (localStorage.getItem('geocode') !== null) }>
-          <SearchForm handleQuery={ this.handleQuery } />
-        </If>
+        <SearchForm handleQuery={ this.handleQuery } />
         <If condition={ this.state.location !== null }>
           <Map location={ this.state.location } />
           <ErrorMessage />
